@@ -14,7 +14,6 @@ function TodoList() {
   const dispatch = useAppDispatch()
 
   const [todo, setTodo] = React.useState('')
-  console.log(data.data, 'www')
 
   const handleSubmit = () => {
     dispatch(

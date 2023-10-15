@@ -1,22 +1,24 @@
-import { IPhotoStat } from '@/Types/Type'
+import { IPhoto, IPhotoStat } from '@/Types/Type'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState: IPhotoStat = {
   data: [],
+  displayedData: [],
+  totalPage: 0,
 }
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const photos = []
   const perPage = 1
   const numPhotos = 120
-  for (let page = 1; page <= Math.ceil(numPhotos / perPage); page++) {
+  for (let page = 1; page <= 4; page++) {
     try {
       const response: any = await axios.get(
         'https://api.unsplash.com/photos/random',
         {
           params: {
-            client_id: 'ioeNa9wb88jQFAjFYBruioS7nbPxEonSA_cZzR0zNug',
-            count: Math.min(perPage, numPhotos - photos.length),
+            client_id: 'OjYRGlWvQ-6z16DSixxwVIC_sqDqGWVUwP9bzAmDdpI',
+            count: 30,
           },
         }
       )
@@ -34,7 +36,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
       console.error('Ошибка при получении фотографий:', error)
     }
   }
-  console.log(photos, 'ddd')
+  console.log(photos.length, '########')
 
   return photos
 })
@@ -44,10 +46,14 @@ export const photo = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state: IPhotoStat, action) => {
       state.data = action.payload
+      state.totalPage = Math.ceil(action.payload.length / 10)
     })
   },
-  reducers: {},
+  reducers: {
+    setData: (state, action: PayloadAction<IPhoto[]>) => {
+      state.displayedData = action.payload
+    },
+  },
 })
-
-export const {} = photo.actions
+export const { setData } = photo.actions
 export default photo.reducer
