@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 10px 10px 30px;
+  gap: 25px;
+  align-items: center;
+}
+
+.navigation {
+  display: flex;
+  gap: 30px;
+  width: 50px;
+  text-decoration: none;
+}
+.navWrapper {
+  margin: auto;
+}
+.userNameText {
+  color: white;
+}
