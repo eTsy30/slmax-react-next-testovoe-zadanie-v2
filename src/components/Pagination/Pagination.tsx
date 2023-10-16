@@ -1,10 +1,6 @@
 import React from 'react'
-
-interface PaginationProps {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-}
+import styles from './Pagination.module.css'
+import { PaginationProps } from '@/Types/Type'
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -99,16 +95,7 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: 10,
-        alignItems: 'center',
-        gap: 2,
-        marginBottom: 40,
-      }}
-    >
+    <div className={styles.paginationContainer}>
       <button
         style={currentPage < 2 ? { color: 'grey' } : {}}
         onClick={handlePrevPage}

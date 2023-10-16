@@ -1,4 +1,3 @@
-'use client'
 import styles from './page.module.css'
 import PhotoCard from '@/components/PhotoCard/PhotoCard'
 import { useAppSelector, useAppDispatch } from '@/redux/Hooks/hook'
@@ -8,12 +7,8 @@ import { useEffect, useState } from 'react'
 import { IPhoto } from '@/Types/Type'
 import Pagination from '@/components/Pagination/Pagination'
 import { useInView } from 'react-intersection-observer'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/utils/authOptions'
-import { redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 
-export default function Home() {
+export default async function Photos() {
   const itemsPerPage = 12
   const { data, displayedData, totalPage, categories } = useAppSelector(
     (state: RootState) => state.photo
@@ -40,11 +35,6 @@ export default function Home() {
     setCurrentPage(page)
   }
   console.log(displayedData, 'data')
-  const { data: session, status } = useSession({ required: true })
-  if (status === 'loading') {
-    return <>Loading...</>
-  }
-  console.log(data, status, '## ## ##')
 
   return (
     <div>

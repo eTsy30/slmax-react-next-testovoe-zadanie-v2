@@ -6,38 +6,39 @@ const initialState: IPhotoStat = {
   data: [],
   displayedData: [],
   totalPage: 0,
+  categories: [],
 }
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const photos = []
   const perPage = 1
   const numPhotos = 120
-  for (let page = 1; page <= 4; page++) {
-    try {
-      const response: any = await axios.get(
-        'https://api.unsplash.com/photos/random',
-        {
-          params: {
-            client_id: 'OjYRGlWvQ-6z16DSixxwVIC_sqDqGWVUwP9bzAmDdpI',
-            count: 30,
-          },
-        }
-      )
-      console.log(Math.min(perPage, numPhotos - photos.length), 'aaaaaa')
-      const data = response.data.map((item: any) => {
-        return {
-          id: item.id,
-          description: item.alt_description,
-          image: item.urls.small,
-        }
-      })
 
-      photos.push(...data)
-    } catch (error) {
-      console.error('Ошибка при получении фотографий:', error)
-    }
+  try {
+    const response: any = await axios.get(
+      'https://api.unsplash.com/photos/random',
+      {
+        params: {
+          client_id: 'OjYRGlWvQ-6z16DSixxwVIC_sqDqGWVUwP9bzAmDdpI',
+          count: 10,
+        },
+      }
+    )
+    const data = response.data.map((item: any) => {
+      return {
+        id: item.id,
+        description: item.alt_description,
+        image: item.urls.small,
+        category: item.topic_submissions
+          ? Object.keys(item.topic_submissions)
+          : [],
+      }
+    })
+    console.log(data)
+
+    photos.push(...data)
+  } catch (error) {
+    console.error('Ошибка при получении фотографий:', error)
   }
-  console.log(photos.length, '########')
-
   return photos
 })
 export const photo = createSlice({
@@ -45,15 +46,25 @@ export const photo = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state: IPhotoStat, action) => {
-      state.data = action.payload
-      state.totalPage = Math.ceil(action.payload.length / 10)
+      state.data.push(...action.payload)
+      state.totalPage = Math.ceil(state.data.length / 12)
+      const categories: string[] = Array.from(
+        new Set(state.data.flatMap((photo) => photo.category || []))
+      ).sort()
+      state.categories = categories
     })
   },
   reducers: {
     setData: (state, action: PayloadAction<IPhoto[]>) => {
       state.displayedData = action.payload
     },
+    setSearch: (state, action) => {
+      state.displayedData =
+        action.payload === 'All'
+          ? state.data.slice(1, 12)
+          : state.data.filter((i) => i.category?.includes(action.payload))
+    },
   },
 })
-export const { setData } = photo.actions
+export const { setData, setSearch } = photo.actions
 export default photo.reducer

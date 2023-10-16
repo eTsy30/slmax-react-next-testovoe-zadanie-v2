@@ -6,8 +6,14 @@ import { IPhoto } from '@/Types/Type'
 
 const PhotoCard: FC<IPhoto> = ({ description, image }) => {
   const [like, setLike] = useState<boolean>(false)
+
   return (
-    <section className={styles.container}>
+    <section
+      className={styles.container}
+      style={{
+        transform: `rotate(${Math.floor(Math.random() * 21) - 10}deg)`,
+      }}
+    >
       {image ? (
         <Image
           className={styles.image}

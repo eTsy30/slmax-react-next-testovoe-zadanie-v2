@@ -11,13 +11,9 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* background-image: url(https://images.unsplash.com/photo-1576506542790-51244b486a6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHdvb2QlMjB0YWJsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60); */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 a {

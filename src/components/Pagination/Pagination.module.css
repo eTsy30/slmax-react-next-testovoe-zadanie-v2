@@ -1,0 +1,7 @@
+.paginationContainer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  right: 1%;
+  top: 45%;
+}
