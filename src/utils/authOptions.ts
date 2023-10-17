@@ -68,7 +68,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: '/auth/singIn',
-  },
+  // pages: {
+  //   signIn: '/auth/singIn',
+  // },
 }
