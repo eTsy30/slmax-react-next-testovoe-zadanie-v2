@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4'
 import GoogleProvider from 'next-auth/providers/google'
 
 interface User {
-  id: string // Добавляем поле id
+  id: string
   email: string
   password: string
 }
@@ -31,13 +31,11 @@ export const authOptions: NextAuthOptions = {
           const data = await fs.readFile('users.json')
           users = JSON.parse(data.toString())
         } catch (error) {}
-        console.log(credentials?.register, '++++')
 
         if (credentials?.register) {
           const existingUser = users.find(
             (user) => user.email === credentials.email
           )
-          console.log(existingUser, '-------')
 
           if (existingUser) {
             return Promise.reject('User with this email already exists')

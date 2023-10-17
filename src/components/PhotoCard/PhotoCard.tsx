@@ -3,9 +3,24 @@ import React, { FC, useState } from 'react'
 import Image from 'next/image'
 import styles from './PhotoCard.module.css'
 import { IPhoto } from '@/Types/Type'
-
-const PhotoCard: FC<IPhoto> = ({ description, image }) => {
+import Link from 'next/link'
+import { useLocalStorage } from '@/Hooks/LocalStorage/useLocalStorageAddItem'
+import { useSession } from 'next-auth/react'
+const PhotoCard: FC<IPhoto> = ({ description, image, id }) => {
+  const { data: session } = useSession()
   const [like, setLike] = useState<boolean>(false)
+  const { data, setLocalStorageData, setRemveLocalStorageData } =
+    useLocalStorage(`${session?.user?.email}`)
+  const handleAddToLocalStorage = () => {
+    setLike(!like)
+    !like
+      ? setLocalStorageData({
+          description: description,
+          image: image,
+          id: id,
+        })
+      : setRemveLocalStorageData(id)
+  }
 
   return (
     <section
@@ -15,14 +30,16 @@ const PhotoCard: FC<IPhoto> = ({ description, image }) => {
       }}
     >
       {image ? (
-        <Image
-          className={styles.image}
-          src={image}
-          alt="Next.js Logo"
-          width={300}
-          height={400}
-          loading="lazy"
-        />
+        <Link href={`/${id}`}>
+          <Image
+            className={styles.image}
+            src={image}
+            alt="Next.js Logo"
+            width={300}
+            height={400}
+            loading="lazy"
+          />
+        </Link>
       ) : (
         <h3>Load</h3>
       )}
@@ -30,11 +47,14 @@ const PhotoCard: FC<IPhoto> = ({ description, image }) => {
       <div className={styles.titleContainer}>
         <h4 className={styles.title}>{description}</h4>
         <i
-          onClick={() => {
-            setLike(!like)
-          }}
+          onClick={handleAddToLocalStorage}
           className={'fa-solid fa-heart '}
-          style={{ color: like ? ' #F96167' : 'grey' }}
+          style={{
+            color:
+              like || Boolean(data.find((i) => i.id === id))
+                ? ' #F96167'
+                : 'grey',
+          }}
         ></i>
       </div>
     </section>

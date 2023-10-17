@@ -36,9 +36,10 @@ const Pagination: React.FC<PaginationProps> = ({
       for (let i = firstPage; i <= lastPage; i++) {
         pageButtons.push(
           <button
+            className={styles.button}
             key={i}
             onClick={() => handleGoToPage(i)}
-            style={{ color: i === currentPage ? 'blue' : 'black' }}
+            style={{ color: i === currentPage ? 'red' : 'white' }}
           >
             {i}
           </button>
@@ -52,9 +53,10 @@ const Pagination: React.FC<PaginationProps> = ({
         for (let i = firstPage; i <= pageRangeDisplayed; i++) {
           pageButtons.push(
             <button
+              className={styles.button}
               key={i}
               onClick={() => handleGoToPage(i)}
-              style={{ color: i === currentPage ? 'blue' : 'black' }}
+              style={{ color: i === currentPage ? 'red' : 'white' }}
             >
               {i}
             </button>
@@ -64,9 +66,10 @@ const Pagination: React.FC<PaginationProps> = ({
         for (let i = lastPage - pageRangeDisplayed + 1; i <= lastPage; i++) {
           pageButtons.push(
             <button
+              className={styles.button}
               key={i}
               onClick={() => handleGoToPage(i)}
-              style={{ color: i === currentPage ? 'blue' : 'black' }}
+              style={{ color: i === currentPage ? 'red' : 'white' }}
             >
               {i}
             </button>
@@ -80,9 +83,10 @@ const Pagination: React.FC<PaginationProps> = ({
         ) {
           pageButtons.push(
             <button
+              className={styles.button}
               key={i}
               onClick={() => handleGoToPage(i)}
-              style={{ color: i === currentPage ? 'blue' : 'black' }}
+              style={{ color: i === currentPage ? 'red' : 'white' }}
             >
               {i}
             </button>
@@ -97,32 +101,44 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className={styles.paginationContainer}>
       <button
+        className={styles.button}
         style={currentPage < 2 ? { color: 'grey' } : {}}
         onClick={handlePrevPage}
         disabled={currentPage < 2}
       >
-        Назад
+        {' '}
+        <i className="fa-regular fa-circle-up" style={{ fontSize: '30px' }}></i>
       </button>
       {currentPage <= firstPage + 2 || (
-        <button onClick={() => handleGoToPage(1)} style={{ color: 'black' }}>
+        <button
+          onClick={() => handleGoToPage(1)}
+          className={styles.button}
+          style={{ color: 'white' }}
+        >
           1
         </button>
       )}
       {renderPagination()}
       {currentPage >= lastPage - 2 || (
         <button
+          className={styles.button}
           onClick={() => handleGoToPage(lastPage)}
-          style={{ color: 'black' }}
+          style={{ color: 'white' }}
         >
           {lastPage}
         </button>
       )}
       <button
+        className={styles.button}
         style={currentPage === totalPages ? { color: 'grey' } : {}}
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
       >
-        Далее
+        {' '}
+        <i
+          className="fa-regular fa-circle-down"
+          style={{ fontSize: '30px' }}
+        ></i>
       </button>
     </div>
   )

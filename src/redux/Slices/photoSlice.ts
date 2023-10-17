@@ -10,16 +10,14 @@ const initialState: IPhotoStat = {
 }
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const photos = []
-  const perPage = 1
-  const numPhotos = 120
 
   try {
     const response: any = await axios.get(
       'https://api.unsplash.com/photos/random',
       {
         params: {
-          client_id: 'OjYRGlWvQ-6z16DSixxwVIC_sqDqGWVUwP9bzAmDdpI',
-          count: 10,
+          client_id: 'ioeNa9wb88jQFAjFYBruioS7nbPxEonSA_cZzR0zNug',
+          count: 30,
         },
       }
     )
@@ -33,7 +31,6 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
           : [],
       }
     })
-    console.log(data)
 
     photos.push(...data)
   } catch (error) {
@@ -64,7 +61,23 @@ export const photo = createSlice({
           ? state.data.slice(1, 12)
           : state.data.filter((i) => i.category?.includes(action.payload))
     },
+    getOnePhoto: (state, action) => {
+      state.displayedData = state.data.filter((i) =>
+        i.id?.includes(action.payload)
+      )
+    },
+    sortData: (state, action: PayloadAction<string>) => {
+      if (action.payload === 'asc') {
+        state.displayedData = [...state.displayedData].sort((a, b) =>
+          a.description.localeCompare(b.description)
+        )
+      } else if (action.payload === 'desc') {
+        state.displayedData = [...state.displayedData].sort((a, b) =>
+          b.description.localeCompare(a.description)
+        )
+      }
+    },
   },
 })
-export const { setData, setSearch } = photo.actions
+export const { setData, setSearch, getOnePhoto, sortData } = photo.actions
 export default photo.reducer

@@ -1,5 +1,5 @@
 export interface IPhoto {
-  id?: string
+  id: string
   description: string
   image: string
   category?: Array<string>

@@ -1,10 +1,11 @@
 .container {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  margin: 10px 10px 30px;
+  width: 95%;
+  margin: 10px 10px 30px 10px;
   gap: 25px;
   align-items: center;
+  justify-content: space-between;
+  margin: 20px auto;
 }
 
 .navigation {
@@ -18,4 +19,29 @@
 }
 .userNameText {
   color: white;
+}
+.select {
+  height: 50px;
+  min-width: 80px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  background: rgba(201, 201, 201, 0.8);
+
+  backdrop-filter: blur(30px);
+  padding: 10px;
+}
+.buttonSing {
+  height: 50px;
+  min-width: 80px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  background: rgba(201, 201, 201, 0.8);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  margin: 15px;
 }

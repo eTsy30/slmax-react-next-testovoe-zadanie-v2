@@ -5,7 +5,6 @@ import { Inter } from 'next/font/google'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import NextAuth from './providers/sessionProvider'
-import SingButton from '@/components/Header/Header'
 import Header from '@/components/Header/Header'
 config.autoAddCss = false
 const inter = Inter({ subsets: ['latin'] })

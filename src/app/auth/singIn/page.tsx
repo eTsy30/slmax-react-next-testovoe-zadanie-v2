@@ -13,6 +13,7 @@ const LoginPage = () => {
       email: userName.current,
       password: pass.current,
       redirect: true,
+      register: false,
       callbackUrl: '/',
     })
   }
